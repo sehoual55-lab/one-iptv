@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img">
+  <defs>
+    <linearGradient id="bgdocumentaries" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="gldocumentaries" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadedocumentaries" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="300" height="400" fill="url(#bgdocumentaries)"/><circle cx="127" cy="209" r="153" fill="url(#gldocumentaries)" opacity="0.55"/><circle cx="256" cy="102" r="118" fill="url(#gldocumentaries)" opacity="0.57"/><circle cx="100" cy="179" r="159" fill="url(#gldocumentaries)" opacity="0.36"/><path d="M213 0 L233 400 L236 400 L216 0 Z" fill="#ffffff" opacity="0.15"/><path d="M300 0 L326 400 L329 400 L303 0 Z" fill="#ffffff" opacity="0.21"/><path d="M205 0 L216 400 L219 400 L208 0 Z" fill="#ffffff" opacity="0.06"/><path d="M4 0 L88 400 L92 400 L8 0 Z" fill="#ffffff" opacity="0.09"/><circle cx="85" cy="258" r="33" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="85" cy="258" r="66" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="85" cy="258" r="99" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="85" cy="258" r="132" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V400 M28 0V400 M56 0V400 M84 0V400 M112 0V400 M140 0V400 M168 0V400 M196 0V400 M224 0V400 M252 0V400 M280 0V400 M308 0V400 M0 0H300 M0 28H300 M0 56H300 M0 84H300 M0 112H300 M0 140H300 M0 168H300 M0 196H300 M0 224H300 M0 252H300 M0 280H300 M0 308H300 M0 336H300 M0 364H300 M0 392H300 M0 420H300" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><g opacity=".85" fill="none" stroke="#ff2b3b" stroke-width="2.4"><circle cx="150" cy="230" r="44"/><ellipse cx="150" cy="230" rx="19.36" ry="44"/><line x1="106" y1="230" x2="194" y2="230"/><path d="M109.52 210.2 H190.48000000000002 M109.52 249.8 H190.48000000000002"/></g><rect width="300" height="400" fill="url(#fadedocumentaries)"/></svg>

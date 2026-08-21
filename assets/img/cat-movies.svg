@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img">
+  <defs>
+    <linearGradient id="bgmovies" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="glmovies" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fademovies" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="300" height="400" fill="url(#bgmovies)"/><circle cx="52" cy="292" r="103" fill="url(#glmovies)" opacity="0.80"/><circle cx="258" cy="107" r="134" fill="url(#glmovies)" opacity="0.53"/><circle cx="137" cy="245" r="163" fill="url(#glmovies)" opacity="0.47"/><path d="M172 0 L170 400 L172 400 L173 0 Z" fill="#ffffff" opacity="0.12"/><path d="M300 0 L254 400 L259 400 L305 0 Z" fill="#ffffff" opacity="0.16"/><path d="M306 0 L234 400 L236 400 L308 0 Z" fill="#ffffff" opacity="0.11"/><path d="M170 0 L238 400 L243 400 L174 0 Z" fill="#ffffff" opacity="0.17"/><circle cx="186" cy="218" r="33" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="186" cy="218" r="66" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="186" cy="218" r="99" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="186" cy="218" r="132" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V400 M28 0V400 M56 0V400 M84 0V400 M112 0V400 M140 0V400 M168 0V400 M196 0V400 M224 0V400 M252 0V400 M280 0V400 M308 0V400 M0 0H300 M0 28H300 M0 56H300 M0 84H300 M0 112H300 M0 140H300 M0 168H300 M0 196H300 M0 224H300 M0 252H300 M0 280H300 M0 308H300 M0 336H300 M0 364H300 M0 392H300 M0 420H300" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><g opacity=".9"><rect x="104" y="194.12" width="92" height="71.76" rx="8" fill="none" stroke="#ff2b3b" stroke-width="2.5"/><rect x="110" y="201.48" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="179.88" y="201.48" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="110" y="220.79999999999998" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="179.88" y="220.79999999999998" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="110" y="240.12" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="179.88" y="240.12" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="110" y="259.44" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/><rect x="179.88" y="259.44" width="10.1" height="10.1" rx="2" fill="#ff2b3b" fill-opacity=".8"/></g><rect width="300" height="400" fill="url(#fademovies)"/></svg>

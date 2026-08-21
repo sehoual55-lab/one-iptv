@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img">
+  <defs>
+    <linearGradient id="bgkids" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="glkids" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadekids" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="300" height="400" fill="url(#bgkids)"/><circle cx="49" cy="205" r="116" fill="url(#glkids)" opacity="0.69"/><circle cx="149" cy="41" r="169" fill="url(#glkids)" opacity="0.59"/><circle cx="233" cy="279" r="95" fill="url(#glkids)" opacity="0.56"/><path d="M49 0 L70 400 L72 400 L52 0 Z" fill="#ffffff" opacity="0.20"/><path d="M47 0 L80 400 L84 400 L51 0 Z" fill="#ffffff" opacity="0.10"/><path d="M113 0 L137 400 L140 400 L116 0 Z" fill="#ffffff" opacity="0.12"/><path d="M133 0 L123 400 L125 400 L134 0 Z" fill="#ffffff" opacity="0.16"/><circle cx="143" cy="252" r="33" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="143" cy="252" r="66" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="143" cy="252" r="99" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="143" cy="252" r="132" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V400 M28 0V400 M56 0V400 M84 0V400 M112 0V400 M140 0V400 M168 0V400 M196 0V400 M224 0V400 M252 0V400 M280 0V400 M308 0V400 M0 0H300 M0 28H300 M0 56H300 M0 84H300 M0 112H300 M0 140H300 M0 168H300 M0 196H300 M0 224H300 M0 252H300 M0 280H300 M0 308H300 M0 336H300 M0 364H300 M0 392H300 M0 420H300" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><g opacity=".85" transform="translate(150,230)"><circle r="44" fill="none" stroke="#ff2b3b" stroke-width="2.5"/><path d="M-12.32 -18.48 L22.0 0 L-12.32 18.48 Z" fill="#ff2b3b"/></g><rect width="300" height="400" fill="url(#fadekids)"/></svg>

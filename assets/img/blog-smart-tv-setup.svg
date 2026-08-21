@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img">
+  <defs>
+    <linearGradient id="bgbsmarttvsetup" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="glbsmarttvsetup" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadebsmarttvsetup" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="800" height="450" fill="url(#bgbsmarttvsetup)"/><circle cx="150" cy="316" r="460" fill="url(#glbsmarttvsetup)" opacity="0.57"/><circle cx="237" cy="105" r="242" fill="url(#glbsmarttvsetup)" opacity="0.46"/><circle cx="708" cy="79" r="256" fill="url(#glbsmarttvsetup)" opacity="0.77"/><path d="M69 0 L282 450 L286 450 L74 0 Z" fill="#ffffff" opacity="0.10"/><path d="M-7 0 L-204 450 L-202 450 L-5 0 Z" fill="#ffffff" opacity="0.16"/><path d="M602 0 L407 450 L409 450 L604 0 Z" fill="#ffffff" opacity="0.14"/><path d="M48 0 L219 450 L221 450 L49 0 Z" fill="#ffffff" opacity="0.16"/><path d="M-104 0 L-313 450 L-308 450 L-99 0 Z" fill="#ffffff" opacity="0.15"/><path d="M224 0 L310 450 L315 450 L229 0 Z" fill="#ffffff" opacity="0.07"/><circle cx="230" cy="220" r="88" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="230" cy="220" r="176" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="230" cy="220" r="264" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="230" cy="220" r="352" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V450 M57 0V450 M114 0V450 M171 0V450 M228 0V450 M285 0V450 M342 0V450 M399 0V450 M456 0V450 M513 0V450 M570 0V450 M627 0V450 M684 0V450 M741 0V450 M798 0V450 M855 0V450 M0 0H800 M0 57H800 M0 114H800 M0 171H800 M0 228H800 M0 285H800 M0 342H800 M0 399H800 M0 456H800" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><rect width="800" height="450" fill="url(#fadebsmarttvsetup)"/></svg>

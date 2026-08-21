@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img">
+  <defs>
+    <linearGradient id="bgnews" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="glnews" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadenews" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="300" height="400" fill="url(#bgnews)"/><circle cx="210" cy="55" r="148" fill="url(#glnews)" opacity="0.65"/><circle cx="75" cy="163" r="100" fill="url(#glnews)" opacity="0.75"/><circle cx="192" cy="45" r="156" fill="url(#glnews)" opacity="0.54"/><path d="M230 0 L283 400 L284 400 L231 0 Z" fill="#ffffff" opacity="0.14"/><path d="M133 0 L73 400 L76 400 L136 0 Z" fill="#ffffff" opacity="0.06"/><path d="M193 0 L242 400 L245 400 L195 0 Z" fill="#ffffff" opacity="0.16"/><path d="M223 0 L118 400 L122 400 L227 0 Z" fill="#ffffff" opacity="0.12"/><circle cx="92" cy="178" r="33" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="92" cy="178" r="66" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="92" cy="178" r="99" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="92" cy="178" r="132" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V400 M28 0V400 M56 0V400 M84 0V400 M112 0V400 M140 0V400 M168 0V400 M196 0V400 M224 0V400 M252 0V400 M280 0V400 M308 0V400 M0 0H300 M0 28H300 M0 56H300 M0 84H300 M0 112H300 M0 140H300 M0 168H300 M0 196H300 M0 224H300 M0 252H300 M0 280H300 M0 308H300 M0 336H300 M0 364H300 M0 392H300 M0 420H300" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><g opacity=".85" fill="none" stroke="#ff2b3b" stroke-width="2.4"><circle cx="150" cy="230" r="46"/><ellipse cx="150" cy="230" rx="20.24" ry="46"/><line x1="104" y1="230" x2="196" y2="230"/><path d="M107.68 209.3 H192.32 M107.68 250.7 H192.32"/></g><rect width="300" height="400" fill="url(#fadenews)"/></svg>

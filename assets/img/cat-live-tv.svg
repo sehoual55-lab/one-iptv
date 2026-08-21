@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400" width="300" height="400" role="img">
+  <defs>
+    <linearGradient id="bglivetv" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="gllivetv" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadelivetv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="300" height="400" fill="url(#bglivetv)"/><circle cx="176" cy="91" r="177" fill="url(#gllivetv)" opacity="0.77"/><circle cx="150" cy="213" r="105" fill="url(#gllivetv)" opacity="0.45"/><circle cx="110" cy="220" r="104" fill="url(#gllivetv)" opacity="0.79"/><path d="M40 0 L47 400 L49 400 L41 0 Z" fill="#ffffff" opacity="0.13"/><path d="M15 0 L76 400 L80 400 L19 0 Z" fill="#ffffff" opacity="0.09"/><path d="M105 0 L44 400 L45 400 L106 0 Z" fill="#ffffff" opacity="0.13"/><path d="M194 0 L270 400 L273 400 L198 0 Z" fill="#ffffff" opacity="0.11"/><circle cx="108" cy="241" r="33" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="108" cy="241" r="66" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="108" cy="241" r="99" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="108" cy="241" r="132" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V400 M28 0V400 M56 0V400 M84 0V400 M112 0V400 M140 0V400 M168 0V400 M196 0V400 M224 0V400 M252 0V400 M280 0V400 M308 0V400 M0 0H300 M0 28H300 M0 56H300 M0 84H300 M0 112H300 M0 140H300 M0 168H300 M0 196H300 M0 224H300 M0 252H300 M0 280H300 M0 308H300 M0 336H300 M0 364H300 M0 392H300 M0 420H300" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><g opacity=".85" transform="translate(150,230)"><circle r="46" fill="none" stroke="#ff2b3b" stroke-width="2.5"/><path d="M-12.88 -19.32 L23.0 0 L-12.88 19.32 Z" fill="#ff2b3b"/></g><rect width="300" height="400" fill="url(#fadelivetv)"/></svg>

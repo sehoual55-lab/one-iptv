@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450" role="img">
+  <defs>
+    <linearGradient id="bgbappdownload" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#12121a"/>
+      <stop offset="55%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#1a0a10"/>
+    </linearGradient>
+    <radialGradient id="glbappdownload" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2b3b" stop-opacity=".55"/>
+      <stop offset="100%" stop-color="#ff2b3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="fadebappdownload" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="40%" stop-color="#07070a" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#07070a" stop-opacity=".92"/>
+    </linearGradient>
+  </defs><rect width="800" height="450" fill="url(#bgbappdownload)"/><circle cx="140" cy="238" r="349" fill="url(#glbappdownload)" opacity="0.56"/><circle cx="319" cy="224" r="238" fill="url(#glbappdownload)" opacity="0.38"/><circle cx="626" cy="162" r="258" fill="url(#glbappdownload)" opacity="0.61"/><path d="M5 0 L-229 450 L-227 450 L7 0 Z" fill="#ffffff" opacity="0.07"/><path d="M287 0 L145 450 L150 450 L291 0 Z" fill="#ffffff" opacity="0.09"/><path d="M-111 0 L55 450 L58 450 L-109 0 Z" fill="#ffffff" opacity="0.16"/><path d="M-109 0 L-228 450 L-226 450 L-107 0 Z" fill="#ffffff" opacity="0.19"/><path d="M518 0 L740 450 L742 450 L520 0 Z" fill="#ffffff" opacity="0.22"/><circle cx="196" cy="206" r="88" fill="none" stroke="#ff2b3b" stroke-opacity="0.18" stroke-width="1.5"/><circle cx="196" cy="206" r="176" fill="none" stroke="#ff2b3b" stroke-opacity="0.14" stroke-width="1.5"/><circle cx="196" cy="206" r="264" fill="none" stroke="#ff2b3b" stroke-opacity="0.10" stroke-width="1.5"/><circle cx="196" cy="206" r="352" fill="none" stroke="#ff2b3b" stroke-opacity="0.06" stroke-width="1.5"/><path d="M0 0V450 M57 0V450 M114 0V450 M171 0V450 M228 0V450 M285 0V450 M342 0V450 M399 0V450 M456 0V450 M513 0V450 M570 0V450 M627 0V450 M684 0V450 M741 0V450 M798 0V450 M855 0V450 M0 0H800 M0 57H800 M0 114H800 M0 171H800 M0 228H800 M0 285H800 M0 342H800 M0 399H800 M0 456H800" stroke="#ffffff" stroke-opacity=".035" stroke-width="1" fill="none"/><rect width="800" height="450" fill="url(#fadebappdownload)"/></svg>
