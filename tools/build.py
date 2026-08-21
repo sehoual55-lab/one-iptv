@@ -741,7 +741,7 @@ LEGAL_PAGES = {
         """
     <p><em>Last updated: 1 August 2026</em></p>
     <p>This policy explains what personal information ONE IPTV collects through
-       one-iptv.online, why we collect it, and what we do with it. It is written to be read,
+       one-iptv.website, why we collect it, and what we do with it. It is written to be read,
        not to be skimmed past.</p>
 
     <h2>What we collect</h2>
@@ -794,7 +794,7 @@ LEGAL_PAGES = {
         "Terms of Service",
         """
     <p><em>Last updated: 1 August 2026</em></p>
-    <p>These terms apply to your use of one-iptv.online and to any ONE IPTV plan you purchase.
+    <p>These terms apply to your use of one-iptv.website and to any ONE IPTV plan you purchase.
        By ordering, you agree to them.</p>
 
     <h2>1. What the service is</h2>
@@ -931,7 +931,7 @@ def build_legal():
 def build_404():
     html = page(
         title="Page not found | ONE IPTV",
-        description="The page you are looking for could not be found on one-iptv.online. "
+        description="The page you are looking for could not be found on one-iptv.website. "
                     "Head back to the ONE IPTV home page, browse plans, or call our support team.",
         path="/404.html",
         extra_head='  <meta name="robots" content="noindex, follow">\n',

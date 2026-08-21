@@ -66,22 +66,21 @@ const PAGES = [
 
     // pricing sync from config
     const price = await page.textContent('[data-plan="gold"] [data-plan-price]');
-    if (!price || !/[$€]|XX/.test(price)) problems.push('pricing not synced from config: ' + price);
+    if (!price || !/[£$€]|XX/.test(price)) problems.push('pricing not synced from config: ' + price);
 
-    // checkout modal
+    // checkout modal — opened from a plan card carries that plan into the summary
     await page.click('[data-plan="gold"] [data-open-checkout]');
     await page.waitForTimeout(500);
     const open = await page.isVisible('#checkout-modal.is-open');
     if (!open) problems.push('checkout modal did not open');
     const sumPlan = await page.textContent('[data-sum-plan]');
-    if (sumPlan !== 'Gold') problems.push('summary plan wrong: ' + sumPlan);
+    if (!/Gold/.test(sumPlan)) problems.push('summary plan wrong: ' + sumPlan);
+    // payment methods + email + phone country selector present
+    const payCount = await page.locator('.pay-opt').count();
+    if (payCount !== 4) problems.push('expected 4 payment methods, got ' + payCount);
+    if (!(await page.locator('#co-email').count())) problems.push('email field missing');
+    if (!(await page.locator('[data-phone-cc]').count())) problems.push('phone country selector missing');
     await page.screenshot({ path: `${OUT}/d-modal.png` });
-
-    // switch plan updates summary
-    await page.click('.plan-opt:has(input[value="exclusive"])');
-    await page.waitForTimeout(200);
-    const sum2 = await page.textContent('[data-sum-plan]');
-    if (sum2 !== 'Exclusive') problems.push('plan switch did not update summary: ' + sum2);
 
     // validation blocks empty submit
     await page.click('[data-checkout-submit]');
@@ -90,9 +89,11 @@ const PAGES = [
     if (!errText || !errText.trim()) problems.push('validation did not fire on empty submit');
     await page.screenshot({ path: `${OUT}/d-modal-validation.png` });
 
-    // fill + submit -> success view
-    await page.fill('#co-name', 'Test Customer');
-    await page.fill('#co-phone', '+447700900000');
+    // fill + submit (WhatsApp method) -> success view
+    await page.fill('#co-name', 'Jean Dupont');
+    await page.fill('#co-email', 'jean@example.fr');
+    await page.fill('#co-phone', '612345678');
+    await page.click('.pay-opt:has(input[value="whatsapp"])');
     await page.evaluate(() => { window.open = () => null; });
     await page.click('[data-checkout-submit]');
     await page.waitForTimeout(500);

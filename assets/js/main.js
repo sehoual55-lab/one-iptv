@@ -394,47 +394,84 @@
     var modal, panel, form, successView, formView, lastFocus = null;
 
     var coConn = clampConn((connConfig().default) || 1);
+    var coPlanId = null;   // plan chosen on the pricing card
 
-    function fillPlanOptions() {
-      var picker = $("[data-plan-picker]", modal);
-      if (!picker) return;
-      picker.innerHTML = (CFG.plans || []).map(function (p, i) {
-        var t = planTotal(p, coConn);
+    // Country dialling codes for the phone field.
+    var COUNTRIES = [
+      ["GB", "🇬🇧", "+44"], ["FR", "🇫🇷", "+33"], ["US", "🇺🇸", "+1"],
+      ["IE", "🇮🇪", "+353"], ["BE", "🇧🇪", "+32"], ["CH", "🇨🇭", "+41"],
+      ["ES", "🇪🇸", "+34"], ["DE", "🇩🇪", "+49"], ["IT", "🇮🇹", "+39"],
+      ["NL", "🇳🇱", "+31"], ["PT", "🇵🇹", "+351"], ["LU", "🇱🇺", "+352"],
+      ["CA", "🇨🇦", "+1"], ["MA", "🇲🇦", "+212"], ["DZ", "🇩🇿", "+213"],
+      ["TN", "🇹🇳", "+216"]
+    ];
+
+    // Icon markup for the payment-method options (matches shell.py ICONS).
+    var PAY_ICONS = {
+      card: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>',
+      paypal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20l1.5-9h4a3 3 0 0 0 0-6H7L4.5 20z"/><path d="M10 16h3.5a3.5 3.5 0 0 0 0-7H10.5"/></svg>',
+      crypto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 8h4a2 2 0 0 1 0 4h-4m0 0h4.3a2 2 0 0 1 0 4H9.5m0-8v10m2-11v1m0 9v1"/></svg>',
+      whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm5.35 13.9c-.2.57-1.16 1.08-1.63 1.15-.42.06-.95.08-1.53-.1-.35-.11-.8-.26-1.38-.51-2.43-1.04-4.01-3.48-4.13-3.64-.12-.16-.99-1.32-.99-2.51s.63-1.78.85-2.02c.22-.24.48-.3.64-.3s.32.01.46.01c.16 0 .34-.04.53.41.2.48.67 1.68.73 1.8.06.12.1.26.02.42-.08.16-.12.26-.24.4-.12.14-.25.31-.36.42-.12.12-.24.25-.1.49.14.24.62 1.03 1.34 1.67.92.82 1.7 1.08 1.94 1.2.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.54-.12.22.08 1.41.66 1.65.78.24.12.4.18.46.28.06.1.06.58-.14 1.15z"/></svg>'
+    };
+
+    function selectedPlan() {
+      return planById(coPlanId) ||
+        (CFG.plans || []).filter(function (p) { return p.featured; })[0] ||
+        (CFG.plans || [])[0];
+    }
+
+    function methods() { return (CFG.checkout || {}).paymentMethods || []; }
+
+    function selectedMethod() {
+      var input = $('input[name="pay"]:checked', modal);
+      var id = input ? input.value : (methods()[0] || {}).id;
+      return methods().filter(function (m) { return m.id === id; })[0] || methods()[0] || {};
+    }
+
+    // French helpers
+    function termFr(plan) {
+      var t = plan.months + " mois";
+      if (plan.bonusMonths) {
+        t += " (+" + plan.bonusMonths + " mois offert" + (plan.bonusMonths === 1 ? "" : "s") + ")";
+      }
+      return t;
+    }
+    function connFr(n) { return n + " connexion" + (n === 1 ? "" : "s") + " simultanée" + (n === 1 ? "" : "s"); }
+
+    function fillCountries() {
+      var sel = $("[data-phone-cc]", modal);
+      if (!sel || sel.options.length) return;
+      sel.innerHTML = COUNTRIES.map(function (c) {
+        return '<option value="' + c[2] + '" data-iso="' + c[0] + '">' + c[1] + " " + c[2] + "</option>";
+      }).join("");
+    }
+
+    function selectedCountry() {
+      var sel = $("[data-phone-cc]", form || modal);
+      var opt = sel && sel.selectedOptions ? sel.selectedOptions[0] : null;
+      return opt ? (opt.getAttribute("data-iso") || "") : "";
+    }
+
+    function fillMethods() {
+      var box = $("[data-pay-methods]", modal);
+      if (!box) return;
+      var legend = box.querySelector("legend");
+      var grid = document.createElement("div");
+      grid.className = "pay-grid";
+      grid.innerHTML = methods().map(function (m, i) {
         return (
-          '<label class="plan-opt">' +
-            '<input type="radio" name="plan" value="' + esc(p.id) + '"' + (i === 0 ? " checked" : "") + ">" +
-            '<span class="plan-opt__label">' + esc(p.name) + "</span>" +
-            '<span class="plan-opt__price" data-opt-price="' + esc(p.id) + '">' +
-              (t == null ? "On request" : esc(money(t))) + "</span>" +
+          '<label class="pay-opt">' +
+            '<input type="radio" name="pay" value="' + esc(m.id) + '"' + (i === 0 ? " checked" : "") + ">" +
+            '<span class="pay-opt__icon">' + (PAY_ICONS[m.icon] || "") + "</span>" +
+            '<span class="pay-opt__label">' + esc(m.label) + "</span>" +
           "</label>"
         );
       }).join("");
-      picker.addEventListener("change", updateSummary);
-    }
-
-    function selectedPlan() {
-      var input = $('input[name="plan"]:checked', modal);
-      return input ? planById(input.value) : (CFG.plans || [])[0];
-    }
-
-    function refreshOptionPrices() {
-      (CFG.plans || []).forEach(function (p) {
-        var el = $('[data-opt-price="' + p.id + '"]', modal);
-        if (!el) return;
-        var t = planTotal(p, coConn);
-        el.textContent = (t == null) ? "On request" : money(t);
-      });
-    }
-
-    function updateConnUI() {
-      var c = connConfig();
-      var set = function (sel, val) { var el = $(sel, modal); if (el) el.textContent = val; };
-      set("[data-co-conn-count]", coConn);
-      var lbl = $("[data-co-conn-label]", modal);
-      if (lbl) lbl.textContent = coConn === 1 ? "connection" : "connections";
-      var dec = $("[data-co-conn-dec]", modal), inc = $("[data-co-conn-inc]", modal);
-      if (dec) dec.disabled = coConn <= (c.min || 1);
-      if (inc) inc.disabled = coConn >= (c.max || 5);
+      // keep legend, replace any previous grid
+      var old = box.querySelector(".pay-grid");
+      if (old) old.remove();
+      box.appendChild(grid);
+      if (legend) box.insertBefore(legend, grid);
     }
 
     function updateSummary() {
@@ -442,13 +479,9 @@
       if (!p) return;
       var set = function (sel, val) { var el = $(sel, modal); if (el) el.textContent = val; };
       var total = planTotal(p, coConn);
-      set("[data-sum-plan]", p.name);
-      set("[data-sum-duration]",
-        termLabel(p) + (p.bonusMonths ? " (incl. " + p.bonusMonths + " free)" : ""));
-      set("[data-sum-conn]", coConn + (coConn === 1 ? " device" : " devices"));
-      set("[data-sum-total]", total == null ? "On request" : money(total));
-      refreshOptionPrices();
-      updateConnUI();
+      set("[data-sum-plan]", p.name + " — " + termFr(p));
+      set("[data-sum-conn]", connFr(coConn));
+      set("[data-sum-total]", total == null ? "Sur demande" : money(total));
 
       var note = $("[data-sum-note]", modal);
       if (note) note.hidden = !isPlaceholder(p);
@@ -463,11 +496,11 @@
         var error = "";
 
         if (!value) {
-          error = "This field is required.";
+          error = "Ce champ est obligatoire.";
         } else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value)) {
-          error = "Please enter a valid email address.";
+          error = "Veuillez saisir une adresse e-mail valide.";
         } else if (input.type === "tel" && value.replace(/[^\d]/g, "").length < 6) {
-          error = "Please enter a valid phone number.";
+          error = "Veuillez saisir un numéro de téléphone valide.";
         }
 
         if (field) field.classList.toggle("has-error", !!error);
@@ -482,41 +515,44 @@
       var b = CFG.brand || {};
       var total = planTotal(plan, coConn);
       return (
-        "New order request — " + (b.name || "ONE IPTV") + "\n\n" +
-        "Plan: " + plan.name + " (" + termLabel(plan) +
-          (plan.bonusMonths ? ", incl. " + plan.bonusMonths + " free" : "") + ")\n" +
-        "Connections: " + coConn + "\n" +
-        "Price: " + (total == null ? "to be confirmed" : money(total)) + "\n" +
-        "Name: " + data.name + "\n" +
-        "WhatsApp: " + data.phone + "\n" +
-        (data.notes ? "Notes: " + data.notes + "\n" : "")
+        "Nouvelle commande — " + (b.name || "ONE IPTV") + "\n\n" +
+        "Formule : " + plan.name + " (" + termFr(plan) + ")\n" +
+        "Connexions : " + coConn + "\n" +
+        "Total : " + (total == null ? "à confirmer" : money(total)) + "\n" +
+        "Paiement : " + data.method + "\n" +
+        "Nom : " + data.name + "\n" +
+        "E-mail : " + data.email + "\n" +
+        "Téléphone : " + data.phone + "\n"
       );
     }
 
-    // Silently append the order to the configured Google Sheet endpoint.
-    // Uses a "simple" text/plain POST so the browser sends it without a CORS
-    // preflight (Google Apps Script web apps don't answer preflight requests).
+    // Silently append the order to the Google Sheet endpoint (which also emails you).
+    // Form-encoded (application/x-www-form-urlencoded) so the body survives Google's
+    // internal 302 redirect on /exec — a JSON body would get dropped on that hop and
+    // land as an empty row. The Apps Script reads e.parameter for each field.
     function logOrder(plan, data) {
       var endpoint = (CFG.checkout || {}).logEndpoint;
       if (!endpoint) return;
+      var brand = CFG.brand || {};
       var total = planTotal(plan, coConn);
-      var payload = {
-        name: data.name,
-        email: "",                       // site is WhatsApp-only
-        phone: data.phone,
-        plan: plan.name + (plan.bonusMonths ? " (" + plan.months + "+" + plan.bonusMonths + " mo)" : ""),
-        price: total == null ? "" : money(total),
-        connections: coConn,
-        payment: "En attente",
-        status: "Nouveau",
-        notes: data.notes || ""
-      };
+      var params = new URLSearchParams();
+      params.set("website", brand.domain || brand.url || "");
+      params.set("name", data.name || "");
+      params.set("email", data.email || "");
+      params.set("phone", data.phone || "");
+      params.set("country", data.country || "");
+      params.set("plan", plan.name + " (" + termFr(plan) + ")");
+      params.set("connections", String(coConn));
+      params.set("price", total == null ? "" : money(total));
+      params.set("payment", data.method || "");
+      params.set("paymentLink", data.paymentLink || "");
+      params.set("status", "Nouveau");
       try {
         fetch(endpoint, {
           method: "POST",
           mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: params.toString()
         }).catch(function () {});
       } catch (e) { /* never block the order on logging */ }
     }
@@ -526,55 +562,42 @@
       if (!validate()) return;
 
       var plan = selectedPlan();
+      var method = selectedMethod();
+      var cc = ($("[data-phone-cc]", form) || {}).value || "";
+      var num = ($("#co-phone", form) || {}).value || "";
       var data = {
         name:  ($("#co-name", form)  || {}).value || "",
-        phone: ($("#co-phone", form) || {}).value || "",
-        notes: ($("#co-notes", form) || {}).value || "",
+        email: ($("#co-email", form) || {}).value || "",
+        phone: (cc ? cc + " " : "") + num,
+        country: selectedCountry(),
+        method: method.label || "",
+        methodId: method.id || "",
+        paymentLink: method.url || "",
         planId: plan.id,
-        planName: plan.name,
         connections: coConn
       };
 
-      var co = CFG.checkout || {};
-      var url;
-
-      // Log the order to the Google Sheet (fire-and-forget) whatever mode is used.
+      // Log to the sheet + email you (fire-and-forget), for every method.
       logOrder(plan, data);
 
-      /* --- redirect to a hosted, PCI-compliant checkout ------------------- */
-      if (co.mode === "redirect") {
-        url = (co.paymentUrls || {})[plan.id];
-        if (url) {
-          showSuccess(plan, data, "redirect");
-          window.setTimeout(function () { window.location.href = url; }, 900);
-          return;
-        }
-      }
-
-      /* --- POST to your own endpoint / form service ---------------------- */
-      if (co.mode === "endpoint" && co.endpoint) {
-        var btn = $("[data-checkout-submit]", form);
-        if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-        fetch(co.endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
-        }).then(function () {
-          showSuccess(plan, data, "endpoint");
-        }).catch(function () {
-          showSuccess(plan, data, "handoff");
-        }).then(function () {
-          if (btn) { btn.disabled = false; btn.textContent = "Continue to Checkout"; }
-        });
+      // WhatsApp method → open a pre-filled chat.
+      if (method.action === "whatsapp") {
+        var c = CFG.contact || {};
+        var url = "https://wa.me/" + c.whatsappNumber + "?text=" + encodeURIComponent(orderText(data, plan));
+        showSuccess(plan, data, "whatsapp");
+        window.open(url, "_blank", "noopener");
         return;
       }
 
-      /* --- default: hand the order off to WhatsApp ------------------------ */
-      var c = CFG.contact || {};
-      var body = orderText(data, plan);
-      url = "https://wa.me/" + c.whatsappNumber + "?text=" + encodeURIComponent(body);
-      showSuccess(plan, data, "handoff");
-      window.open(url, "_blank", "noopener");
+      // Redirect method → send to a hosted payment link if one is set.
+      if (method.action === "redirect" && method.url) {
+        showSuccess(plan, data, "redirect");
+        window.setTimeout(function () { window.location.href = method.url; }, 900);
+        return;
+      }
+
+      // Default: record the order; you follow up with the payment details.
+      showSuccess(plan, data, "notify");
     }
 
     function showSuccess(plan, data, mode) {
@@ -584,19 +607,20 @@
 
       var set = function (sel, val) { var el = $(sel, successView); if (el) el.textContent = val; };
       var total = planTotal(plan, coConn);
-      set("[data-ok-plan]", plan.name + " · " + coConn + (coConn === 1 ? " device" : " devices"));
       set("[data-ok-name]", data.name);
-      set("[data-ok-phone]", data.phone);
-      set("[data-ok-total]", total == null ? "On request" : money(total));
+      set("[data-ok-email]", data.email);
+      set("[data-ok-plan]", plan.name + " · " + connFr(coConn));
+      set("[data-ok-pay]", data.method);
+      set("[data-ok-total]", total == null ? "Sur demande" : money(total));
 
       var msg = $("[data-ok-message]", successView);
       if (msg) {
         msg.textContent =
           mode === "redirect"
-            ? "Taking you to our secure payment page…"
-            : mode === "endpoint"
-              ? "Your order request has been received. We will confirm the next step on WhatsApp shortly."
-              : "Your order summary has opened in WhatsApp so you can send it to our team. If it didn't open, tap the button below.";
+            ? "Redirection vers la page de paiement sécurisé…"
+            : mode === "whatsapp"
+              ? "Votre commande s'est ouverte dans WhatsApp. Si ce n'est pas le cas, appuyez sur le bouton ci-dessous."
+              : "Votre commande a bien été enregistrée. Nous vous envoyons les instructions de paiement très vite — vous pouvez aussi nous écrire sur WhatsApp.";
       }
       panel.scrollTop = 0;
     }
@@ -607,8 +631,8 @@
       $$(".field-error", modal).forEach(function (f) { f.textContent = ""; });
       if (formView) formView.hidden = false;
       if (successView) successView.hidden = true;
-      var first = $('input[name="plan"]', modal);
-      if (first) first.checked = true;
+      var firstPay = $('input[name="pay"]', modal);
+      if (firstPay) firstPay.checked = true;
       updateSummary();
     }
 
@@ -616,10 +640,10 @@
       if (!modal) return;
       lastFocus = document.activeElement;
       if (planId) {
-        var radio = $('input[name="plan"][value="' + planId + '"]', modal);
-        if (radio) radio.checked = true;
-        // Carry the connection count chosen on the pricing card, if any.
+        coPlanId = planId;
         if (connections == null && connState[planId] != null) connections = connState[planId];
+      } else if (!coPlanId) {
+        coPlanId = (selectedPlan() || {}).id;
       }
       if (connections != null) coConn = clampConn(connections);
       updateSummary();
@@ -659,13 +683,9 @@
       formView = $("[data-checkout-form-view]", modal);
       successView = $("[data-checkout-success]", modal);
 
-      fillPlanOptions();
+      fillCountries();
+      fillMethods();
       updateSummary();
-
-      // Modal connection stepper
-      var mdec = $("[data-co-conn-dec]", modal), minc = $("[data-co-conn-inc]", modal);
-      if (mdec) mdec.addEventListener("click", function () { coConn = clampConn(coConn - 1); updateSummary(); });
-      if (minc) minc.addEventListener("click", function () { coConn = clampConn(coConn + 1); updateSummary(); });
 
       // note text from config
       var secure = $("[data-secure-note]", modal);

@@ -142,7 +142,7 @@ def build():
   <span class="pv-dot"></span>
   <strong>Local preview</strong>
   <span class="pv-sep"></span>
-  <span class="pv-url" id="pv-url">one-iptv.online/</span>
+  <span class="pv-url" id="pv-url">one-iptv.website/</span>
   <span class="pv-grow"></span>
   <span class="pv-note">Every page and every button works. Links open in this file.</span>
   <button id="pv-hide" type="button" aria-label="Hide preview bar">Hide</button>
@@ -189,7 +189,7 @@ body{padding-bottom:46px}
     var p = PAGES[h];
     main.innerHTML = p.html;
     document.title = p.title;
-    if (urlEl) urlEl.textContent = 'one-iptv.online' + (h === '/' ? '/' : h);
+    if (urlEl) urlEl.textContent = 'one-iptv.website' + (h === '/' ? '/' : h);
 
     // active nav state
     document.querySelectorAll('.nav a, .mnav-link').forEach(function(a){

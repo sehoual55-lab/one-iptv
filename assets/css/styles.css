@@ -1,6 +1,6 @@
 /* ==========================================================================
    ONE IPTV — Premium streaming design system
-   one-iptv.online
+   one-iptv.website
    ========================================================================== */
 
 /* ---------- 1. Tokens ---------- */
@@ -1047,6 +1047,98 @@ ul, ol { color: var(--text-muted); }
 }
 .plan-opt:has(input:checked) .plan-opt__price { color: #ffb3b8; }
 .plan-opt:has(input:focus-visible) { outline: 2px solid var(--red-bright); outline-offset: 2px; }
+
+/* Phone number with country-code selector */
+.phone-row { display: flex; gap: 0.5rem; }
+.phone-cc {
+  flex: 0 0 106px;
+  width: 106px;
+  padding: 0.85rem 1.7rem 0.85rem 0.8rem;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.035);
+  color: #fff;
+  font-size: 0.92rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b7b7c4' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6rem center;
+  background-size: 15px;
+}
+.phone-cc:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px rgba(229,9,20,0.16); }
+.phone-cc option { background: #14141b; color: #fff; }
+.phone-row input { flex: 1; min-width: 0; }
+
+/* Payment method selector (2×2) */
+.pay-methods {
+  border: 0;
+  padding: 0;
+  margin: 0.2rem 0 1.4rem;
+}
+.pay-methods legend {
+  font-size: 0.8rem;
+  font-weight: 640;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 0;
+  margin-bottom: 0.6rem;
+}
+.pay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+.pay-opt {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.035);
+  padding: 0.85rem 0.9rem;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.pay-opt:hover { transform: translateY(-2px); border-color: var(--border-strong); }
+.pay-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.pay-opt__icon {
+  width: 34px; height: 34px;
+  flex: none;
+  border-radius: 9px;
+  display: grid; place-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.pay-opt__icon svg { width: 18px; height: 18px; }
+.pay-opt__label { font-size: 0.92rem; font-weight: 600; }
+.pay-opt:has(input:checked) {
+  border-color: var(--red);
+  background: rgba(229, 9, 20, 0.14);
+  box-shadow: 0 0 0 1px var(--red);
+}
+.pay-opt:has(input:checked) .pay-opt__icon { color: var(--red-bright); border-color: var(--red-line); background: var(--red-soft); }
+.pay-opt:has(input:focus-visible) { outline: 2px solid var(--red-bright); outline-offset: 2px; }
+
+.modal__cancel {
+  display: block;
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.5rem;
+  background: none;
+  border: 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color var(--t-fast);
+}
+.modal__cancel:hover { color: #fff; }
+
+@media (max-width: 420px) {
+  .pay-grid { grid-template-columns: 1fr; }
+}
 
 .summary {
   border-radius: var(--r-md);

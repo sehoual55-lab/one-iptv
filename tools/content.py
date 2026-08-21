@@ -573,7 +573,7 @@ def _plan_card(plan_id, name, months, bonus, base_price, badge, featured, featur
     bonus_html = (f' <span class="plan__bonus">+{bonus} month{"s" if bonus != 1 else ""} free</span>'
                   if bonus else "")
     term_txt = f'{months} month{"s" if months != 1 else ""}'
-    price_txt = f"${base_price}" if base_price else "$XX.XX"
+    price_txt = f"£{base_price}" if base_price else "£XX.XX"   # keep symbol in step with config.js currency
     feats = "".join(f'<li>{icon("check")}<span>{f}</span></li>' for f in features)
     return f"""
       <article class="card plan{' plan--featured' if featured else ''} reveal" data-plan="{plan_id}">

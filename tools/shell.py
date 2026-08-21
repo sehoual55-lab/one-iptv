@@ -4,11 +4,11 @@
 import os
 import re
 
-SITE = "https://one-iptv.online"
+SITE = "https://www.one-iptv.website"
 BRAND = "ONE IPTV"
 PHONE_DISPLAY = "+1 (661) 541-3954"
 PHONE_TEL = "+16615413954"
-EMAIL = "support@one-iptv.online"
+EMAIL = "support@one-iptv.website"
 
 NAV = [
     ("Home", "/"),
@@ -47,6 +47,9 @@ ICONS = {
     "clock": '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
     "globe": '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
     "download": '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+    "card": '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
+    "paypal": '<path d="M7 20l1.5-9h4a3 3 0 0 0 0-6H7L4.5 20z"/><path d="M10 16h3.5a3.5 3.5 0 0 0 0-7H10.5"/>',
+    "crypto": '<circle cx="12" cy="12" r="9"/><path d="M9.5 8h4a2 2 0 0 1 0 4h-4m0 0h4.3a2 2 0 0 1 0 4H9.5m0-8v10m2-11v1m0 9v1"/>',
     "mail": '<rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2.5 6.5 12 13 21.5 6.5"/>',
     "message": '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z"/>',
     "sparkle": '<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
@@ -303,96 +306,81 @@ def modal():
     </button>
 
     <div data-checkout-form-view>
-      <span class="eyebrow">Order</span>
-      <h2 id="checkout-title">Complete Your Order</h2>
-      <p class="modal__lead">Choose a plan and leave your details. Our team confirms your order
-        and sends the setup instructions for your device.</p>
+      <h2 id="checkout-title">Finalisez votre commande</h2>
+      <p class="modal__lead">Vérifiez votre formule et renseignez vos coordonnées pour continuer.</p>
+
+      <div class="summary">
+        <div class="summary__row"><span>Abonnement</span><span data-sum-plan>—</span></div>
+        <div class="summary__row"><span>Connexions</span><span data-sum-conn>—</span></div>
+        <div class="summary__row summary__row--total"><span>Total à régler</span><span data-sum-total>—</span></div>
+        <p style="font-size:.78rem;margin:.8rem 0 0;color:var(--text-dim)" data-sum-note hidden>
+          Le tarif est en cours de finalisation. Validez votre commande et nous vous confirmerons
+          le montant exact avant tout paiement.
+        </p>
+      </div>
 
       <form id="checkout-form" novalidate>
-        <fieldset style="border:0;padding:0;margin:0 0 .4rem">
-          <legend class="field" style="font-size:.8rem;font-weight:640;letter-spacing:.05em;
-                  text-transform:uppercase;color:var(--text-dim);margin-bottom:.6rem;padding:0">
-            Select your plan
-          </legend>
-          <div class="plan-picker" data-plan-picker></div>
+        <div class="field">
+          <label for="co-name">Nom complet</label>
+          <input id="co-name" name="name" type="text" autocomplete="name"
+                 placeholder="Jean Dupont" data-validate required>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="field">
+          <label for="co-email">Adresse e-mail</label>
+          <input id="co-email" name="email" type="email" autocomplete="email"
+                 placeholder="jean.dupont@email.fr" data-validate required>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <div class="field">
+          <label for="co-phone">Téléphone</label>
+          <div class="phone-row">
+            <select id="co-phone-cc" class="phone-cc" data-phone-cc aria-label="Indicatif pays"></select>
+            <input id="co-phone" name="phone" type="tel" autocomplete="tel"
+                   placeholder="6 12 34 56 78" data-validate required>
+          </div>
+          <span class="field-error" role="alert"></span>
+        </div>
+
+        <fieldset class="pay-methods" data-pay-methods>
+          <legend>Mode de paiement</legend>
+          <!-- options injected from config.checkout.paymentMethods -->
         </fieldset>
 
-        <div class="field" style="margin-bottom:1.2rem">
-          <label id="co-conn-label-txt">Simultaneous connections</label>
-          <div class="stepper" role="group" aria-labelledby="co-conn-label-txt">
-            <button class="stepper__btn" type="button" data-co-conn-dec
-                    aria-label="Fewer connections">&minus;</button>
-            <span class="stepper__val">
-              <b data-co-conn-count>1</b>
-              <span data-co-conn-label>connection</span>
-            </span>
-            <button class="stepper__btn" type="button" data-co-conn-inc
-                    aria-label="More connections">+</button>
-          </div>
-          <span class="field-error" style="color:var(--text-dim)">One connection = one device
-            streaming at a time. Each extra device is discounted.</span>
-        </div>
-
-        <div class="form-grid">
-          <div class="field">
-            <label for="co-name">Full name</label>
-            <input id="co-name" name="name" type="text" autocomplete="name"
-                   placeholder="Your full name" data-validate required>
-            <span class="field-error" role="alert"></span>
-          </div>
-          <div class="field">
-            <label for="co-phone">WhatsApp number</label>
-            <input id="co-phone" name="phone" type="tel" autocomplete="tel"
-                   placeholder="+44 7700 900000" data-validate required>
-            <span class="field-error" role="alert"></span>
-          </div>
-          <div class="field">
-            <label for="co-notes">Device &amp; notes <span style="text-transform:none;
-                   letter-spacing:0;color:var(--text-dim)">(optional)</span></label>
-            <input id="co-notes" name="notes" type="text"
-                   placeholder="e.g. Samsung Smart TV, UK">
-          </div>
-        </div>
-
-        <div class="summary">
-          <h3>Order Summary</h3>
-          <div class="summary__row"><span>Plan</span><span data-sum-plan>—</span></div>
-          <div class="summary__row"><span>Term</span><span data-sum-duration>—</span></div>
-          <div class="summary__row"><span>Connections</span><span data-sum-conn>—</span></div>
-          <div class="summary__row"><span>Setup assistance</span><span>Included</span></div>
-          <div class="summary__row summary__row--total"><span>Total</span><span data-sum-total>—</span></div>
-          <p style="font-size:.78rem;margin:.8rem 0 0;color:var(--text-dim)" data-sum-note hidden>
-            Prices are being finalised. Confirm your order and our team will send you the exact
-            amount before any payment is taken.
-          </p>
-        </div>
-
         <button class="btn btn--primary btn--lg btn--block" type="submit" data-checkout-submit>
-          Continue to Checkout {icon("arrow-right")}
+          Continuer vers le paiement
         </button>
 
         <p class="modal__note">
-          {icon("lock")}<span data-secure-note> We never ask for card details on this site.</span>
+          {icon("lock")}<span data-secure-note> Aucune donnée de carte n'est saisie sur ce site.</span>
         </p>
+        <p class="modal__note" style="margin-top:.5rem">
+          Une question ?
+          <a href="#" data-whatsapp-link target="_blank" rel="noopener"
+             style="color:var(--red-bright);font-weight:650">WhatsApp <span data-phone-display>{PHONE_DISPLAY}</span></a>
+        </p>
+        <button class="modal__cancel" type="button" data-checkout-close>Annuler</button>
       </form>
     </div>
 
     <div class="modal-success" data-checkout-success hidden>
       <div class="modal-success__icon">{icon("check")}</div>
-      <h2>Order request received</h2>
-      <p data-ok-message>Thank you — our team will be in touch shortly.</p>
+      <h2>Commande reçue</h2>
+      <p data-ok-message>Merci — nous revenons vers vous très vite.</p>
       <div class="summary">
-        <h3>Order Summary</h3>
-        <div class="summary__row"><span>Name</span><span data-ok-name>—</span></div>
-        <div class="summary__row"><span>WhatsApp</span><span data-ok-phone>—</span></div>
-        <div class="summary__row"><span>Plan</span><span data-ok-plan>—</span></div>
+        <div class="summary__row"><span>Nom</span><span data-ok-name>—</span></div>
+        <div class="summary__row"><span>E-mail</span><span data-ok-email>—</span></div>
+        <div class="summary__row"><span>Formule</span><span data-ok-plan>—</span></div>
+        <div class="summary__row"><span>Paiement</span><span data-ok-pay>—</span></div>
         <div class="summary__row summary__row--total"><span>Total</span><span data-ok-total>—</span></div>
       </div>
       <a class="btn btn--primary btn--block" href="#" data-whatsapp-link target="_blank" rel="noopener">
-        {icon("whatsapp")}Send on WhatsApp
+        {icon("whatsapp")}Nous contacter sur WhatsApp
       </a>
       <button class="btn btn--ghost btn--block" type="button" data-checkout-close
-              style="margin-top:.7rem">Close</button>
+              style="margin-top:.7rem">Fermer</button>
     </div>
   </div>
 </div>

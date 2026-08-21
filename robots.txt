@@ -1,8 +1,8 @@
-# robots.txt for https://one-iptv.online
+# robots.txt for https://www.one-iptv.website
 User-agent: *
 Allow: /
 
 # Nothing here needs crawling
 Disallow: /404.html
 
-Sitemap: https://one-iptv.online/sitemap.xml
+Sitemap: https://www.one-iptv.website/sitemap.xml

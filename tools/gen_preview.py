@@ -9,7 +9,7 @@ import re
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 OUT = os.path.join(ROOT, "seo-preview.html")
 
-SITE = "https://one-iptv.online"
+SITE = "https://www.one-iptv.website"
 
 # Human-friendly section names, in the order they should appear
 ORDER = [
@@ -500,7 +500,7 @@ function social(p){
     `<img src="${DATA.ogImage}" alt="">
      <div class="tw-t"><p class="tw-h">${esc(p.ogTitle)}</p>
        <p class="tw-d">${esc(p.ogDesc)}</p>
-       <p class="tw-u">From one-iptv.online</p></div>`));
+       <p class="tw-u">From one-iptv.website</p></div>`));
   g.append(tw);
 
   const wa = el('div');

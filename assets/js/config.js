@@ -12,8 +12,8 @@ window.ONE_IPTV_CONFIG = {
      ---------------------------------------------------------------------- */
   brand: {
     name: "ONE IPTV",
-    domain: "one-iptv.online",
-    url: "https://one-iptv.online"
+    domain: "one-iptv.website",
+    url: "https://www.one-iptv.website"
   },
 
   contact: {
@@ -26,9 +26,9 @@ window.ONE_IPTV_CONFIG = {
      2. CURRENCY
      ---------------------------------------------------------------------- */
   currency: {
-    code: "USD",       // ISO code, used by Product/Offer schema
-    symbol: "$",
-    position: "before" // "before" => $19.99   |   "after" => 19.99 $
+    code: "GBP",       // ISO code, used by Product/Offer schema
+    symbol: "£",
+    position: "before" // "before" => £19.99   |   "after" => 19.99 £
   },
 
   /* ----------------------------------------------------------------------
@@ -194,29 +194,29 @@ window.ONE_IPTV_CONFIG = {
        "endpoint" — POST the order as JSON to your own backend / form service.
      ---------------------------------------------------------------------- */
   checkout: {
-    mode: "handoff",       // "handoff" (WhatsApp) | "redirect" | "endpoint"
-
-    // Used when mode === "redirect" — one hosted checkout link per plan id.
-    paymentUrls: {
-      "bronze": "",
-      "gold": "",
-      "platinum": "",
-      "exclusive": ""
-    },
-
-    // Used when mode === "endpoint".
-    endpoint: "",
+    // Payment methods shown in the order modal (French labels).
+    // action: "notify"   -> record the order (sheet + email) and show a
+    //                       "we'll send you the payment details" confirmation.
+    //         "whatsapp" -> open a pre-filled WhatsApp chat with the order.
+    //         "redirect" -> send the customer to `url` (paste a Stripe/PayPal
+    //                       hosted link). If url is empty it falls back to notify.
+    paymentMethods: [
+      { id: "card",     label: "Carte bancaire",   icon: "card",     action: "notify",   url: "" },
+      { id: "paypal",   label: "PayPal",           icon: "paypal",   action: "notify",   url: "" },
+      { id: "crypto",   label: "Virement / Crypto", icon: "crypto",   action: "notify",   url: "" },
+      { id: "whatsapp", label: "Via WhatsApp",     icon: "whatsapp", action: "whatsapp", url: "" }
+    ],
 
     /* --------------------------------------------------------------------
-       GOOGLE SHEET ORDER LOG
-       Every order is silently saved to your Google Sheet in addition to the
-       WhatsApp hand-off. Paste the Apps Script web-app URL you get after
-       deploying tools/google-sheet/Code.gs (see the README, section 5b).
-       Leave empty to disable. Works with any checkout mode.
+       ORDER DELIVERY
+       Every order is (1) saved to your Google Sheet AND (2) emailed to the
+       address configured inside the Apps Script (google-sheet/Code.gs →
+       NOTIFY_EMAIL). Paste the Apps Script web-app URL below. If the chosen
+       payment method is "WhatsApp", the order also opens a WhatsApp chat.
        -------------------------------------------------------------------- */
     logEndpoint: "https://script.google.com/macros/s/AKfycbztudtvafjfhDworDH1Bw8p9P5f4_rSL68gEK-LC1fSlwLkx3_af5MkD5SMi90DIhAv/exec",
 
-    secureNote: "We never ask for card details on this site. Payment is completed through a secure payment provider or arranged directly with our support team."
+    secureNote: "Aucune donnée de carte n'est saisie sur ce site. Après votre commande, nous vous envoyons les instructions de paiement sécurisé."
   },
 
   /* ----------------------------------------------------------------------

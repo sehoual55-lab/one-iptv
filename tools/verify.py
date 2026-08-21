@@ -158,7 +158,7 @@ for path in sorted(pages()):
 
 # --- sitemap covers every page ------------------------------------------
 sitemap = open(os.path.join(ROOT, "sitemap.xml"), encoding="utf-8").read()
-listed = set(re.findall(r"<loc>https://one-iptv\.online(.*?)</loc>", sitemap))
+listed = set(re.findall(r"<loc>https://www\.one-iptv\.website(.*?)</loc>", sitemap))
 on_disk = set()
 for path in pages():
     rel = os.path.relpath(path, ROOT)

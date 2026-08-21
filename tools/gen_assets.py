@@ -276,7 +276,7 @@ def og():
   <text x="80" y="382" font-family="Inter, Arial, sans-serif" font-size="72" font-weight="800" fill="#ff2b3b">for Smart TVs &amp; Devices</text>
   <text x="80" y="452" font-family="Inter, Arial, sans-serif" font-size="28" fill="#b7b7c4">Live TV, movies, series and more on compatible devices.</text>
   <rect x="80" y="500" width="300" height="62" rx="31" fill="url(#or)"/>
-  <text x="230" y="540" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#fff">one-iptv.online</text>
+  <text x="230" y="540" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#fff">one-iptv.website</text>
   <text x="410" y="540" font-family="Inter, Arial, sans-serif" font-size="22" fill="#83838f">Simple • Fast • Flexible • Multi-Device</text>
 </svg>"""
 
