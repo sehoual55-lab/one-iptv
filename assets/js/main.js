@@ -358,8 +358,17 @@
     });
   }
 
-  /* ----------------------------------- 7. Product schema (real prices only) */
+  /* ----------------------------------- 7. Offer schema (real prices only) */
+  /* Typed as a Service, not a Product. What is sold is subscription access, so
+     Google evaluates Product markup as a shopping item and asks for shipping,
+     returns and product images that do not apply here — which is what produced
+     the "invalid merchant listing" report. Service carries the same price data
+     without claiming to be a shippable good.
+     Only emitted on pages that actually show the plans; a blog article is not an
+     offer page and should not carry offer markup. */
   function injectOfferSchema() {
+    if (!document.querySelector("[data-plan]")) return;   // no pricing section here
+
     var plans = CFG.plans || [];
     var real = plans.filter(function (p) { return !isPlaceholder(p); });
     if (!real.length) return;   // never publish invented prices
@@ -368,10 +377,11 @@
     var cur = (CFG.currency || {}).code || "EUR";
     var data = {
       "@context": "https://schema.org",
-      "@type": "Product",
+      "@type": "Service",
       "name": brand.name + " Subscription Plans",
+      "serviceType": "IPTV streaming subscription",
       "description": "Subscription access plans for " + brand.name + " on compatible Smart TVs and streaming devices.",
-      "brand": { "@type": "Brand", "name": brand.name },
+      "provider": { "@id": (brand.url || "") + "/#organization" },
       "offers": real.map(function (p) {
         return {
           "@type": "Offer",
@@ -379,6 +389,7 @@
           "price": Number(p.basePrice).toFixed(2),
           "priceCurrency": cur,
           "availability": "https://schema.org/InStock",
+          "category": "Subscription",
           "url": (brand.url || "") + "/pricing/"
         };
       })
