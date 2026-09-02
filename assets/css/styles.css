@@ -1921,14 +1921,18 @@ ul, ol { color: var(--text-muted); }
    stepper is used (longer totals, an added "you save X"). Reserving their height
    keeps every card the same size at any connection count. */
 .plan__price {
-  margin-bottom: 1.4rem;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  row-gap: 0.1rem;
-  min-height: calc(clamp(2.1rem, 4vw, 2.7rem) + 1.45rem);
+  /* Always two fixed lines: amount, then term. Nothing re-flows as the total
+     grows with the connection stepper, so the card height never changes. */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.15rem;
+  margin-bottom: 1.6rem;
+  min-height: calc(clamp(2.1rem, 4vw, 2.7rem) + 1.5rem);
 }
-.plan__price .amount { white-space: nowrap; }
-.plan__price .per { white-space: nowrap; }
+.plan__price .amount { white-space: nowrap; line-height: 1.05; }
+.plan__price .per { white-space: nowrap; line-height: 1.2; }
 
 .stepper {
   display: flex;
@@ -1938,7 +1942,7 @@ ul, ol { color: var(--text-muted); }
   border-radius: var(--r-md);
   border: 1px solid var(--border);
   background: rgba(255,255,255,0.03);
-  margin: 0.2rem 0 0.5rem;
+  margin: 0 0 0.9rem;
 }
 .stepper__btn {
   width: 34px; height: 34px;
@@ -1968,7 +1972,9 @@ ul, ol { color: var(--text-muted); }
   font-size: 0.76rem;
   line-height: 1.45;
   color: var(--text-dim);
-  margin: 0 0 1.2rem;
+  margin: 0 0 1.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--border);
   min-height: 4.35em;   /* 3 lines — the "you save X" clause appears from 2 connections */
 }
 .plan__conn-note b { color: #7df3b0; font-weight: 650; }
