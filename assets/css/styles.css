@@ -1908,6 +1908,21 @@ ul, ol { color: var(--text-muted); }
   .pricing-grid--4 .plan__conn-note { min-height: 5.8em; }
 }
 
+.modal__promo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--red-bright);
+  background: var(--red-soft);
+  border: 1px solid var(--red-line);
+  border-radius: var(--r-md);
+  padding: 0.75rem 0.95rem;
+  margin: 0 0 1.1rem;
+}
+.modal__promo[hidden] { display: none; }
+
 .plan__bonus {
   display: inline-block;
   font-size: 0.78rem;

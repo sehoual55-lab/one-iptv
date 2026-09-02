@@ -220,6 +220,23 @@ window.ONE_IPTV_CONFIG = {
   },
 
   /* ----------------------------------------------------------------------
+     6b. WELCOME POPUP
+     Opens the order form on a chosen plan shortly after the page loads.
+       enabled  – master switch, set to false to turn the popup off
+       planId   – which plan the form opens on ("exclusive", "gold", ...)
+       delayMs  – wait before it appears
+       showOnce – "session" (once per browser session), "day", or "always"
+       message  – line shown above the order summary (leave "" to hide it)
+     ---------------------------------------------------------------------- */
+  promo: {
+    enabled: true,
+    planId: "exclusive",
+    delayMs: 7000,
+    showOnce: "session",
+    message: "Offre Exclusive — 24 mois + 3 mois offerts, notre meilleur tarif."
+  },
+
+  /* ----------------------------------------------------------------------
      7. TRUST LINE (hero)
      ---------------------------------------------------------------------- */
   trustPoints: ["Simple", "Fast", "Flexible", "Multi-Device"]

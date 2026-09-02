@@ -659,6 +659,8 @@
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
       document.body.classList.remove("no-scroll");
+      var promoEl = $("[data-checkout-promo]", modal);
+      if (promoEl) { promoEl.hidden = true; promoEl.textContent = ""; }
       if (lastFocus && lastFocus.focus) lastFocus.focus();
       window.setTimeout(reset, 320);
     }
@@ -716,6 +718,50 @@
     return { init: init, open: open, close: close };
   })();
 
+  /* --------------------------------------------- 8b. Welcome order popup */
+  /* Opens the order form on a chosen plan a few seconds after load.
+     Controlled entirely by CFG.promo — see config.js. */
+  function initPromo() {
+    var cfg = CFG.promo;
+    if (!cfg || !cfg.enabled) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var mode = cfg.showOnce || "session";
+    var KEY = "oneiptv_promo_seen";
+
+    function alreadySeen() {
+      if (mode === "always") return false;
+      try {
+        if (mode === "session") return window.sessionStorage.getItem(KEY) === "1";
+        var stamp = window.localStorage.getItem(KEY);
+        return !!stamp && (Date.now() - parseInt(stamp, 10)) < 86400000;
+      } catch (err) { return false; }   // storage blocked — just show it
+    }
+
+    function markSeen() {
+      try {
+        if (mode === "session") window.sessionStorage.setItem(KEY, "1");
+        else if (mode !== "always") window.localStorage.setItem(KEY, String(Date.now()));
+      } catch (err) { /* ignore */ }
+    }
+
+    if (alreadySeen()) return;
+
+    window.setTimeout(function () {
+      var modal = $("#checkout-modal");
+      if (!modal || modal.classList.contains("is-open")) return;   // never interrupt
+      if (document.hidden) return;                                  // not on a background tab
+
+      markSeen();
+      Checkout.open(cfg.planId || null);
+
+      if (cfg.message) {
+        var promoEl = $("[data-checkout-promo]", modal);
+        if (promoEl) { promoEl.textContent = cfg.message; promoEl.hidden = false; }
+      }
+    }, cfg.delayMs || 7000);
+  }
+
   /* ------------------------------------------------------ 9. Scroll reveal */
   function initReveal() {
     var els = $$(".reveal");
@@ -772,6 +818,7 @@
     initReveal();
     initActiveNav();
     initYear();
+    initPromo();
   }
 
   if (document.readyState === "loading") {

@@ -310,6 +310,7 @@ def modal():
     <div data-checkout-form-view>
       <h2 id="checkout-title">Finalisez votre commande</h2>
       <p class="modal__lead">Vérifiez votre formule et renseignez vos coordonnées pour continuer.</p>
+      <p class="modal__promo" data-checkout-promo hidden></p>
 
       <div class="summary">
         <div class="summary__row"><span>Abonnement</span><span data-sum-plan>—</span></div>
