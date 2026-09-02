@@ -671,7 +671,7 @@ def pricing_section(heading="Choose Your Plan", with_switch=False):
     return f"""<section class="section" id="pricing">
   <div class="glow glow--red" style="width:640px;height:640px;top:-160px;left:50%;
        transform:translateX(-50%);opacity:.28"></div>
-  <div class="wrap">
+  <div class="wrap wrap--wide">
     <div class="section-head reveal">
       <span class="eyebrow">Pricing</span>
       <h2>{heading}</h2>

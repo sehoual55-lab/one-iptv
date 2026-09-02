@@ -45,6 +45,7 @@
 
   /* Layout */
   --wrap: 1200px;
+  --wrap-wide: 1440px;
   --gutter: clamp(1.15rem, 4vw, 2.5rem);
   --header-h: 76px;
 
@@ -122,6 +123,9 @@ ul, ol { color: var(--text-muted); }
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
+
+/* Wider container for sections that need the horizontal room (pricing 4-up) */
+.wrap--wide { max-width: var(--wrap-wide); }
 
 .section { padding: clamp(4rem, 9vw, 7.5rem) 0; position: relative; }
 .section--tight { padding: clamp(3rem, 6vw, 5rem) 0; }
@@ -1893,6 +1897,10 @@ ul, ol { color: var(--text-muted); }
 }
 @media (min-width: 1080px) {
   .pricing-grid--4 { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1240px) {
+  .pricing-grid--4 { gap: 1.7rem; }
+  .pricing-grid--4 .plan { padding: 2.2rem 2rem; }
 }
 
 .plan__bonus {
