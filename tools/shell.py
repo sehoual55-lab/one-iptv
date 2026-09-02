@@ -398,9 +398,11 @@ def scripts():
 """
 
 
-def page(*, title, description, path, body, extra_head="", og_type="website", keywords=""):
+def page(*, title, description, path, body, extra_head="", og_type="website", keywords="",
+         image="/assets/img/og-image.png"):
     return (
-        head(title, description, path, og_type=og_type, extra_head=extra_head, keywords=keywords)
+        head(title, description, path, og_type=og_type, extra_head=extra_head,
+             keywords=keywords, image=image)
         + header()
         + '<main id="main">\n'
         + body

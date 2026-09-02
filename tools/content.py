@@ -331,6 +331,9 @@ POSTS = [
         "excerpt": "Can you get it, does it work, how do you watch — answered honestly, "
                    "including when the console is the wrong tool for the job.",
         "img": "blog-xbox-one",
+        "img_ext": "webp",
+        "og_img": "/assets/img/blog-xbox-one-og.jpg",
+        "img_alt": "A family watching a large wall-mounted TV showing the ONE IPTV logo, with a media cabinet and streaming devices below the screen",
         "tag": "Devices",
         "date": "2026-08-26",
         "read": "8 min read",
@@ -369,6 +372,9 @@ POSTS = [
         "excerpt": "The app is what you touch every evening. Here's how to tell a good player "
                    "from a bad one before you waste a night on the wrong choice.",
         "img": "blog-iptv-app",
+        "img_ext": "webp",
+        "og_img": "/assets/img/blog-iptv-app-og.jpg",
+        "img_alt": "A family on a sofa watching an IPTV app for TV open on a large screen in a London living room",
         "tag": "Apps",
         "date": "2026-09-01",
         "read": "9 min read",
@@ -773,12 +779,23 @@ def contact_section(heading="Need Help?"):
 """
 
 
+def img_src(p):
+    """Blog thumbnail path. Posts default to generated SVG artwork; a post can set
+    "img_ext" (e.g. "webp") when it uses a real photograph instead."""
+    return f"/assets/img/{p['img']}.{p.get('img_ext', 'svg')}"
+
+
+def og_src(p):
+    """Social-card image for a post: a JPG when one exists, else the site default."""
+    return p.get("og_img", "/assets/img/og-image.png")
+
+
 def blog_cards(posts, limit=None):
     items = posts[:limit] if limit else posts
     return "".join(f"""
       <article class="card post-card reveal">
         <a href="/blog/{p['slug']}/" class="post-card__media" tabindex="-1" aria-hidden="true">
-          <img src="/assets/img/{p['img']}.svg" alt="" loading="lazy" decoding="async"
+          <img src="{img_src(p)}" alt="" loading="lazy" decoding="async"
                width="800" height="450">
         </a>
         <div class="post-card__body">

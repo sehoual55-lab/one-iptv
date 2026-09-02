@@ -70,7 +70,7 @@ def article_page(post, body_html):
         "@type": "BlogPosting",
         "headline": post["title"],
         "description": post["desc"],
-        "image": SITE + f"/assets/img/{post['img']}.svg",
+        "image": SITE + C.og_src(post),
         "datePublished": post["date"],
         "dateModified": post["date"],
         "author": {"@type": "Organization", "name": BRAND, "url": SITE + "/"},
@@ -106,7 +106,7 @@ def article_page(post, body_html):
 
 <div class="section section--tight">
   <div class="wrap">
-    <img src="/assets/img/{post['img']}.svg" alt="" width="800" height="450" loading="lazy"
+    <img src="{C.img_src(post)}" alt="{post.get('img_alt', '')}" width="1600" height="900" loading="lazy"
          decoding="async" style="border-radius:var(--r-lg);border:1px solid var(--border);
          max-width:820px;margin:0 auto 2.5rem;width:100%">
     <div class="prose">
@@ -133,4 +133,5 @@ def article_page(post, body_html):
         keywords=post["kw"],
         body=hero + _cta(post) + _related(post),
         extra_head=extra_head,
+        image=C.og_src(post),
     )
