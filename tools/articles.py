@@ -6,6 +6,7 @@ from shell import page, icon, ld, SITE, BRAND, PHONE_DISPLAY, PHONE_TEL
 import content as C
 import posts_a as A
 import posts_b as B
+import posts_c as Cc
 
 ARTICLES = {
     "one-iptv-complete-guide-for-beginners": A.BEGINNERS,
@@ -15,6 +16,8 @@ ARTICLES = {
     "one-iptv-uk-getting-started-guide": B.UK_GUIDE,
     "smart-one-iptv-app-download-setup-guide": B.APP_DOWNLOAD,
     "how-to-set-up-iptv-on-your-tv": B.TV_SETUP,
+    "iptv-on-xbox-one-does-it-work": Cc.XBOX_ONE,
+    "iptv-app-for-tv-how-to-choose": Cc.APP_FOR_TV,
 }
 
 
@@ -118,6 +121,10 @@ def article_page(post, body_html):
 </article>
 """
 
+    extra_head = ld(article_schema) + ld(bcs)
+    if post.get("faqs"):
+        extra_head += ld(C.faq_schema(post["faqs"]))
+
     return page(
         title=post["seo_title"],
         description=post["desc"],
@@ -125,5 +132,5 @@ def article_page(post, body_html):
         og_type="article",
         keywords=post["kw"],
         body=hero + _cta(post) + _related(post),
-        extra_head=ld(article_schema) + ld(bcs),
+        extra_head=extra_head,
     )

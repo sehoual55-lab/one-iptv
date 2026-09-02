@@ -321,6 +321,59 @@ POSTS = [
         "read": "9 min read",
         "kw": "iptv app for tv, iptv tv smart, iptv app, one iptv",
     },
+    {
+        "slug": "iptv-on-xbox-one-does-it-work",
+        "title": "IPTV on Xbox One: Does It Work, and How to Watch",
+        "seo_title": "IPTV on Xbox One: Does It Work? | ONE IPTV",
+        "desc": "Can you get IPTV on Xbox One, does it actually work, and how do you watch? "
+                "The three routes that exist, what each is like to live with, and the one "
+                "we recommend.",
+        "excerpt": "Can you get it, does it work, how do you watch — answered honestly, "
+                   "including when the console is the wrong tool for the job.",
+        "img": "blog-xbox-one",
+        "tag": "Devices",
+        "date": "2026-08-26",
+        "read": "8 min read",
+        "kw": "iptv on xbox one, can you get iptv on xbox one, does iptv work on xbox one, "
+              "how to watch iptv on xbox one, one iptv, iptv app",
+        "faqs": [
+            ("Can you get IPTV on Xbox One?",
+             "Yes — either through a media player app from the Microsoft Store, where one is "
+             "available in your region, or through the console's browser. Neither is as smooth "
+             "as a dedicated streaming device, but both can play your subscription."),
+            ("Does IPTV work on Xbox One?",
+             "It does, provided the app you install accepts a playlist URL or a server login and "
+             "your connection is stable. The console is capable of the playback; the limitation "
+             "is the choice of software, not the hardware."),
+            ("How do I watch IPTV on Xbox One?",
+             "Install a compatible player from the store, enter the server address, username and "
+             "password we send you, and open a channel. If no suitable player is listed, use a "
+             "streaming stick on a spare HDMI port instead — same subscription, better "
+             "experience."),
+            ("Does it work the same on Xbox Series X and Series S?",
+             "Broadly yes. The newer consoles run a more current browser and the same store, so "
+             "the same routes apply, and both handle high-bitrate streams comfortably. The app "
+             "selection remains the constraint."),
+            ("Will my subscription work on the console and my TV at the same time?",
+             "That depends on how many simultaneous connections your plan includes. One "
+             "connection means one stream at a time; if two people watch at once, you need two. "
+             "The connection count is adjustable when you order."),
+        ],
+    },
+    {
+        "slug": "iptv-app-for-tv-how-to-choose",
+        "title": "IPTV App for TV: How to Choose the Right Player",
+        "seo_title": "IPTV App for TV: How to Choose a Player | ONE IPTV",
+        "desc": "How to pick an IPTV app for your TV: the three families of player, what "
+                "separates a good one from a bad one, and how to switch players safely.",
+        "excerpt": "The app is what you touch every evening. Here's how to tell a good player "
+                   "from a bad one before you waste a night on the wrong choice.",
+        "img": "blog-iptv-app",
+        "tag": "Apps",
+        "date": "2026-09-01",
+        "read": "9 min read",
+        "kw": "iptv app for tv, iptv app, iptv tv smart, ip smart iptv, smart one iptv",
+    },
 ]
 
 

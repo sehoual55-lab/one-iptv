@@ -161,6 +161,8 @@ BLOG = [
     ("uk-guide", 955),
     ("app-download", 966),
     ("tv-setup", 977),
+    ("xbox-one", 988),
+    ("iptv-app", 999),
 ]
 for name, seed in BLOG:
     write(f"blog-{name}.svg", poster("b" + name.replace("-", ""), 800, 450, seed))
