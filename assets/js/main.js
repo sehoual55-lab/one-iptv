@@ -718,49 +718,198 @@
     return { init: init, open: open, close: close };
   })();
 
-  /* --------------------------------------------- 8b. Welcome order popup */
-  /* Opens the order form on a chosen plan a few seconds after load.
-     Controlled entirely by CFG.promo — see config.js. */
-  function initPromo() {
-    var cfg = CFG.promo;
-    if (!cfg || !cfg.enabled) return;
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  /* Check mark used by the plan feature lists and the offer popup. */
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"' +
+    ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    '<polyline points="20 6 9 17 4 12"/></svg>';
 
-    var mode = cfg.showOnce || "session";
-    var KEY = "oneiptv_promo_seen";
+  /* --------------------------------------------- 8b. Welcome offer popup */
+  /* A standalone offer panel that appears a few seconds after load. It collects
+     name / email / WhatsApp number, then hands those straight into the main order
+     form on the chosen plan, so there is one ordering pipeline, not two.
+     Every string lives in CFG.promo — see config.js. */
+  var Promo = (function () {
+    var modal, panel, form, lastFocus = null, shown = false;
+
+    function cfg() { return CFG.promo || {}; }
+    function plan() { return planById(cfg().planId) || (CFG.plans || [])[0]; }
+
+    function totalMonths(p) { return (p.months || 0) + (p.bonusMonths || 0); }
+
+    function fill() {
+      var c = cfg(), p = plan();
+      if (!p) return;
+      var set = function (sel, val) { var el = $(sel, modal); if (el) el.textContent = val || ""; };
+
+      set("[data-promo-badge]", c.badge);
+      set("[data-promo-line1]", c.line1);
+      set("[data-promo-line2]", c.line2);
+      set("[data-promo-lead]", c.lead);
+      set("[data-promo-form-label]", c.formLabel);
+      set("[data-promo-submit]", c.cta);
+      set("[data-promo-compare]", c.compare);
+
+      var list = $("[data-promo-list]", modal);
+      if (list) {
+        list.innerHTML = (c.points || []).map(function (pt) {
+          var strong = Array.isArray(pt) ? pt[0] : pt;
+          var rest = Array.isArray(pt) ? (pt[1] || "") : "";
+          return '<li>' + ICON_CHECK + "<span><b>" + esc(strong) + "</b> " + esc(rest) + "</span></li>";
+        }).join("");
+      }
+
+      var base = planTotal(p, 1);
+      set("[data-promo-price]", base == null ? "" : money(base));
+      set("[data-promo-per]", p.months ? "/ " + p.months + " months" : "");
+
+      var months = totalMonths(p);
+      var pm = $("[data-promo-permonth]", modal);
+      if (pm) {
+        if (base == null || !months || !c.perMonth) { pm.hidden = true; }
+        else {
+          pm.hidden = false;
+          pm.textContent = c.perMonth
+            .replace("{permonth}", money(base / months))
+            .replace("{totalmonths}", String(months));
+        }
+      }
+
+      var ph = function (sel, val) { var el = $(sel, modal); if (el && val) el.placeholder = val; };
+      ph("#promo-name", c.namePlaceholder);
+      ph("#promo-email", c.emailPlaceholder);
+      ph("#promo-phone", c.phonePlaceholder);
+
+      // Country codes: reuse the same list the order form uses.
+      var sel = $("[data-promo-cc]", modal);
+      var src = $("[data-phone-cc]", $("#checkout-modal"));
+      if (sel && src && !sel.options.length) sel.innerHTML = src.innerHTML;
+    }
+
+    function validate() {
+      var ok = true;
+      $$("[data-validate]", form).forEach(function (input) {
+        var field = input.closest(".field");
+        var msg = field ? $(".field-error", field) : null;
+        var value = (input.value || "").trim();
+        var error = "";
+
+        if (!value) error = "This field is required.";
+        else if (input.type === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value))
+          error = "Please enter a valid email address.";
+        else if (input.type === "tel" && value.replace(/[^\d]/g, "").length < 6)
+          error = "Please enter a valid phone number.";
+
+        if (field) field.classList.toggle("has-error", !!error);
+        if (msg) msg.textContent = error;
+        input.setAttribute("aria-invalid", error ? "true" : "false");
+        if (error && ok) { input.focus(); ok = false; }
+      });
+      return ok;
+    }
+
+    // Copy the details into the main order form and open it on this plan.
+    function handOff() {
+      var co = $("#checkout-modal");
+      if (!co) return;
+      var copy = function (from, to) {
+        var a = $(from, modal), b = $(to, co);
+        if (a && b) b.value = a.value;
+      };
+      copy("#promo-name", "#co-name");
+      copy("#promo-email", "#co-email");
+      copy("#promo-phone", "#co-phone");
+      copy("[data-promo-cc]", "[data-phone-cc]");
+      close();
+      window.setTimeout(function () { Checkout.open(cfg().planId || null); }, 220);
+    }
+
+    function submit(e) {
+      e.preventDefault();
+      if (!validate()) return;
+      handOff();
+    }
+
+    function open() {
+      if (!modal || shown) return;
+      lastFocus = document.activeElement;
+      fill();
+      shown = true;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("no-scroll");
+      var target = $("#promo-name", modal);
+      window.setTimeout(function () { if (target) target.focus(); }, 60);
+    }
+
+    function close() {
+      if (!modal) return;
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("no-scroll");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+
+    function trapFocus(e) {
+      if (e.key !== "Tab" || !modal || !modal.classList.contains("is-open")) return;
+      var f = $$('button:not([disabled]), [href], input:not([type="hidden"]), select, textarea', panel)
+        .filter(function (el) { return el.offsetParent !== null; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    function seenKey() { return "oneiptv_promo_seen"; }
 
     function alreadySeen() {
+      var mode = cfg().showOnce || "session";
       if (mode === "always") return false;
       try {
-        if (mode === "session") return window.sessionStorage.getItem(KEY) === "1";
-        var stamp = window.localStorage.getItem(KEY);
+        if (mode === "session") return window.sessionStorage.getItem(seenKey()) === "1";
+        var stamp = window.localStorage.getItem(seenKey());
         return !!stamp && (Date.now() - parseInt(stamp, 10)) < 86400000;
-      } catch (err) { return false; }   // storage blocked — just show it
+      } catch (err) { return false; }
     }
 
     function markSeen() {
+      var mode = cfg().showOnce || "session";
       try {
-        if (mode === "session") window.sessionStorage.setItem(KEY, "1");
-        else if (mode !== "always") window.localStorage.setItem(KEY, String(Date.now()));
-      } catch (err) { /* ignore */ }
+        if (mode === "session") window.sessionStorage.setItem(seenKey(), "1");
+        else if (mode !== "always") window.localStorage.setItem(seenKey(), String(Date.now()));
+      } catch (err) { /* storage blocked — nothing to do */ }
     }
 
-    if (alreadySeen()) return;
+    function init() {
+      var c = cfg();
+      modal = $("#promo-modal");
+      if (!modal || !c.enabled) return;
+      panel = $(".modal__panel", modal);
+      form = $("#promo-form", modal);
 
-    window.setTimeout(function () {
-      var modal = $("#checkout-modal");
-      if (!modal || modal.classList.contains("is-open")) return;   // never interrupt
-      if (document.hidden) return;                                  // not on a background tab
+      $$("[data-promo-close]", modal).forEach(function (b) { b.addEventListener("click", close); });
+      if (form) form.addEventListener("submit", submit);
 
-      markSeen();
-      Checkout.open(cfg.planId || null);
+      var cmp = $("[data-promo-compare]", modal);
+      if (cmp) cmp.addEventListener("click", function () { close(); window.location.href = "/pricing/"; });
 
-      if (cfg.message) {
-        var promoEl = $("[data-checkout-promo]", modal);
-        if (promoEl) { promoEl.textContent = cfg.message; promoEl.hidden = false; }
-      }
-    }, cfg.delayMs || 7000);
-  }
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) close();
+      });
+      document.addEventListener("keydown", trapFocus);
+
+      if (alreadySeen()) return;
+
+      window.setTimeout(function () {
+        var co = $("#checkout-modal");
+        if (co && co.classList.contains("is-open")) return;   // never interrupt an order
+        if (document.hidden) return;                           // not on a background tab
+        markSeen();
+        open();
+      }, c.delayMs || 7000);
+    }
+
+    return { init: init, open: open, close: close };
+  })();
 
   /* ------------------------------------------------------ 9. Scroll reveal */
   function initReveal() {
@@ -818,7 +967,7 @@
     initReveal();
     initActiveNav();
     initYear();
-    initPromo();
+    Promo.init();
   }
 
   if (document.readyState === "loading") {
@@ -840,6 +989,8 @@
   }
 
   window.ONE_IPTV = {
+    openPromo: Promo.open,
+    closePromo: Promo.close,
     openCheckout: Checkout.open,
     closeCheckout: Checkout.close,
     refresh: refresh

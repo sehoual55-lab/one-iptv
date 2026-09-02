@@ -233,7 +233,24 @@ window.ONE_IPTV_CONFIG = {
     planId: "exclusive",
     delayMs: 7000,
     showOnce: "session",
-    message: "Offre Exclusive — 24 mois + 3 mois offerts, notre meilleur tarif."
+
+    // Every line of the popup. Edit or translate here — no HTML to touch.
+    badge: "Exclusive offer",
+    line1: "Two years in one go,",
+    line2: "and nothing left to pay",
+    lead: "The longest plan we offer, settled with a single payment.",
+    points: [
+      ["24 months + 3 free", "covered by one payment"],
+      ["The price does not move", "for the whole period, and nothing renews on its own"],
+      ["Extra connections at \u221215%", "each additional connection is discounted automatically"]
+    ],
+    perMonth: "Works out at {permonth} a month across {totalmonths} months",
+    formLabel: "Leave your details and we will come back to you",
+    namePlaceholder: "Full name",
+    emailPlaceholder: "Email address",
+    phonePlaceholder: "WhatsApp number",
+    cta: "Order the Exclusive plan",
+    compare: "Compare all four plans"
   },
 
   /* ----------------------------------------------------------------------

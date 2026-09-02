@@ -399,6 +399,65 @@ def scripts():
 """
 
 
+def promo_modal():
+    """Welcome offer popup. All copy comes from config.js -> promo, so the text can be
+    changed (or translated) without touching the markup."""
+    return f"""<div class="modal promo" id="promo-modal" role="dialog" aria-modal="true"
+     aria-labelledby="promo-title" aria-hidden="true">
+  <div class="modal__backdrop" data-promo-close></div>
+  <div class="modal__panel promo__panel">
+    <button class="modal__close" type="button" data-promo-close aria-label="Close offer">
+      {icon("close")}
+    </button>
+
+    <span class="promo__badge" data-promo-badge></span>
+    <h2 class="promo__title" id="promo-title">
+      <span data-promo-line1></span>
+      <span class="promo__title-accent" data-promo-line2></span>
+    </h2>
+    <p class="promo__lead" data-promo-lead></p>
+
+    <ul class="promo__list" data-promo-list></ul>
+
+    <div class="promo__price">
+      <span class="promo__amount" data-promo-price></span>
+      <span class="promo__per" data-promo-per></span>
+    </div>
+    <p class="promo__permonth" data-promo-permonth></p>
+
+    <form id="promo-form" class="promo__form" novalidate>
+      <p class="promo__form-label" data-promo-form-label></p>
+
+      <div class="promo__row">
+        <div class="field">
+          <label class="sr-only" for="promo-name">Full name</label>
+          <input id="promo-name" name="name" type="text" autocomplete="name" data-validate required>
+          <span class="field-error" role="alert"></span>
+        </div>
+        <div class="field">
+          <label class="sr-only" for="promo-email">Email address</label>
+          <input id="promo-email" name="email" type="email" autocomplete="email" data-validate required>
+          <span class="field-error" role="alert"></span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="sr-only" for="promo-phone">WhatsApp number</label>
+        <div class="phone-row">
+          <select id="promo-phone-cc" class="phone-cc" data-promo-cc aria-label="Country code"></select>
+          <input id="promo-phone" name="phone" type="tel" autocomplete="tel" data-validate required>
+        </div>
+        <span class="field-error" role="alert"></span>
+      </div>
+
+      <button class="btn btn--primary btn--lg btn--block" type="submit" data-promo-submit></button>
+    </form>
+
+    <button class="promo__compare" type="button" data-promo-compare></button>
+  </div>
+</div>
+"""
+
 def page(*, title, description, path, body, extra_head="", og_type="website", keywords="",
          image="/assets/img/og-image.png"):
     return (
@@ -410,6 +469,7 @@ def page(*, title, description, path, body, extra_head="", og_type="website", ke
         + "\n</main>\n"
         + footer()
         + modal()
+        + promo_modal()
         + scripts()
     )
 
