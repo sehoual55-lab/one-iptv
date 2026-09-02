@@ -382,6 +382,10 @@ POSTS = [
     },
 ]
 
+# Newest first — drives the blog index, the homepage preview, the related-guide cards
+# and the sitemap. Remove this line to go back to chronological order.
+POSTS.sort(key=lambda p: p["date"], reverse=True)
+
 
 def post_by_slug(slug):
     return next(p for p in POSTS if p["slug"] == slug)

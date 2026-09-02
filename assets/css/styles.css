@@ -1294,6 +1294,12 @@ ul, ol { color: var(--text-muted); }
 .prose strong { color: #fff; font-weight: 650; }
 .prose a { color: var(--red-bright); text-decoration: underline; text-underline-offset: 3px; }
 .prose a:hover { color: #fff; }
+
+/* Buttons inside article prose are not body links — keep their own styling */
+.prose .btn, .prose .btn:hover { text-decoration: none; }
+.prose .btn--primary, .prose .btn--primary:hover { color: #fff; }
+.prose .btn--ghost, .prose .btn--ghost:hover { color: var(--text); }
+.prose .btn--outline, .prose .btn--outline:hover { color: var(--red-bright); }
 .prose img { border-radius: var(--r-md); border: 1px solid var(--border); margin: 1.8rem 0; }
 .prose hr { border: none; border-top: 1px solid var(--border); margin: 2.6rem 0; }
 
