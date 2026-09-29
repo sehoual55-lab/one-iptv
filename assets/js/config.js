@@ -202,7 +202,6 @@ window.ONE_IPTV_CONFIG = {
     //                       hosted link). If url is empty it falls back to notify.
     paymentMethods: [
       { id: "card",     label: "Carte bancaire",   icon: "card",     action: "notify",   url: "" },
-      { id: "paypal",   label: "PayPal",           icon: "paypal",   action: "notify",   url: "" },
       { id: "crypto",   label: "Virement / Crypto", icon: "crypto",   action: "notify",   url: "" },
       { id: "whatsapp", label: "Via WhatsApp",     icon: "whatsapp", action: "whatsapp", url: "" }
     ],
